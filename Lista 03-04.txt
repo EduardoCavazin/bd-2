@@ -1,0 +1,64 @@
+﻿EXERCÍCIOS DE FIXAÇÃO
+
+
+Para realização dos exercícios, considere as seguintes tabelas:
+
+
+clientes: id_cliente, nome, cidade
+vendas: id_venda, valor, data_venda, tipo_venda, cliente_id, vendedor_id
+
+
+1. Qual é o valor total de vendas realizadas na tabela vendas?
+        SELECT SUM(valor) as total_vendas
+        FROM vendas;
+2. Quantos clientes diferentes compraram de forma online, de acordo com a  tabela vendas?
+SELECT COUNT(DISTINCT cliente_id) as cliente_online
+FROM vendas
+WHERE tipo_venda = 'online';
+3. Qual foi o valor médio das compras realizadas por clientes com id maior que 5 na tabela vendas?
+SELECT AVG(valor) AS media_compras
+FROM vendas
+WHERE cliente_id > 5;
+4. Quais são os 3 vendedores com o maior número de vendas realizadas na tabela vendas?
+        SELECT vendedor_id COUNT(*) AS vendas_realizadas
+        FROM vendas
+        GROUP BY vendedor_id
+        ORDER BY vendas_realizadas DESC
+        LIMIT 3;
+5. Quais são os clientes que realizaram mais de 3 compras na tabela vendas?
+        SELECT cliente_id COUNT(*) AS compras_realizadas
+        FROM vendas
+        GROUP BY cliente_id
+        HAVING COUNT (*) > 3;
+6. Qual foi o maior valor de venda realizado por cada vendedor na tabela vendas?
+SELECT vendedor_id MAX(valor) AS maior_venda
+FROM vendas
+GROUP BY vendedor_id;
+7. Quantas vendas foram realizadas por vendedores com id menor que 10 na tabela vendas?
+SELECT vendedor_id COUNT(*) AS vendas_realizadas
+FROM vendas
+WHERE vendedor_id < 10
+GROUP BY vendedor_id;
+8. Qual foi o menor valor de venda realizado por cada vendedor na tabela vendas?
+SELECT vendedor_id MIN(valor) AS menor_venda
+FROM vendas
+GROUP BY vendedor_id;
+9. Qual é o valor total de vendas realizadas por cada tipo de venda na tabela vendas?
+SELECT tipo_venda SUM(valor) AS total_tipo
+FROM vendas
+GROUP BY tipo_venda;
+10. Quais são os vendedores que realizaram mais de 5 vendas na tabela vendas?
+SELECT vendedor_id COUNT(*) AS vendas_feitas
+FROM vendas
+GROUP BY vendedor_id
+HAVING COUNT(*) > 5;
+11. Qual foi o maior valor de venda realizada por clientes de cada cidade na tabela vendas?
+SELECT c.cidade, MAX(v.valor) AS max_venda
+FROM clientes c
+JOIN vendas v ON c.id_cliente = v.cliente_id
+GROUP BY c.cidade;
+12. Quais são os clientes que realizaram compras em pelo menos duas formas diferentes na tabela vendas?
+SELECT cliente_id
+FROM vendas
+GROUP BY clientes_id
+HAVING COUNT (DISTINCT tipo_venda) > 2;
